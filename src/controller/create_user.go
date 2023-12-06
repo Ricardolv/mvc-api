@@ -16,6 +16,7 @@ func Create(c *gin.Context) {
 		restErr := rest_err.NewBadRequestError(
 			fmt.Sprintf("There are some incorrect fields, error=%s\n", err.Error()))
 		c.JSON(restErr.Code, restErr)
+		return
 	}
 
 	fmt.Println(userRequest)

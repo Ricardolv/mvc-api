@@ -14,7 +14,7 @@ POST {{url}}/users
     "email" : "test@test.com",
 	"password": "123456",
 	"name": "Teste name",
-	"age": 23
+	"age": 2
 }
 
 ###
