@@ -10,6 +10,13 @@ GET {{url}}/users/email/2334
 ###
 POST {{url}}/users
 
+{
+    "email" : "test@test.com",
+	"password": "123456",
+	"name": "Teste name",
+	"age": 23
+}
+
 ###
 PUT {{url}}/users/2334
 
