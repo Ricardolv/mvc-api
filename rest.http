@@ -1,0 +1,17 @@
+@url = http://localhost:8080
+
+
+###
+GET {{url}}/users/2334
+
+###
+GET {{url}}/users/email/2334
+
+###
+POST {{url}}/users
+
+###
+PUT {{url}}/users/2334
+
+###
+DELETE {{url}}/users/2334
