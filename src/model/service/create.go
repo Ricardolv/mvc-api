@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/Ricardolv/mvc-api/src/config/logger"
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
 	"github.com/Ricardolv/mvc-api/src/model"
@@ -13,12 +11,27 @@ import (
 func (ud *userDomainService) Create(
 	userDomain model.UserDomainInterface,
 ) (model.UserDomainInterface, *rest_err.RestErr) {
-	logger.Info("Init create model", zap.String("journey", "createUser"))
+
+	logger.Info("Init createUser model.",
+		zap.String("journey", "createUser"))
+
+	user, _ := ud.FindByEmail(userDomain.GetEmail())
+	if user != nil {
+		return nil, rest_err.NewBadRequestError("Email is already registered in another account")
+	}
 
 	userDomain.EncryptPassword()
+	userDomainRepository, err := ud.userRepository.Create(userDomain)
+	if err != nil {
+		logger.Error("Error trying to call repository",
+			err,
+			zap.String("journey", "createUser"))
+		return nil, err
+	}
 
-	fmt.Println(userDomain.GetPassword())
-
-	logger.Info("End create model", zap.String("journey", "createUser"))
-	return nil, nil
+	logger.Info(
+		"CreateUser service executed successfully",
+		zap.String("userId", userDomainRepository.GetID()),
+		zap.String("journey", "createUser"))
+	return userDomainRepository, nil
 }

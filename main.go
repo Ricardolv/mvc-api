@@ -1,12 +1,14 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/Ricardolv/mvc-api/src/config/database/mongodb"
 	"github.com/Ricardolv/mvc-api/src/config/logger"
 	"github.com/Ricardolv/mvc-api/src/controller"
 	"github.com/Ricardolv/mvc-api/src/controller/routes"
+	"github.com/Ricardolv/mvc-api/src/model/repository"
 	"github.com/Ricardolv/mvc-api/src/model/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -23,9 +25,16 @@ func main() {
 		return
 	}
 
-	mongodb.NewMongoDBConnection()
+	database, err := mongodb.NewMongoDBConnection(context.Background())
+	if err != nil {
+		log.Fatalf(
+			"Error trying to connect to database, error=%s \n",
+			err.Error())
+		return
+	}
 
-	service := service.NewUserDomainService()
+	repo := repository.NewUserRepository(database)
+	service := service.NewUserDomainService(repo)
 	controller := controller.NewUserControllerInterface(service)
 
 	router := gin.Default()

@@ -6,7 +6,8 @@ import (
 )
 
 func InitRoutes(r *gin.RouterGroup,
-	controller controller.UserControllerInterface) {
+	controller controller.UserControllerInterface,
+) {
 
 	r.GET("/users/:id", controller.FindByID)
 	r.GET("/users/email/:email", controller.FindByEmail)

@@ -13,11 +13,11 @@ var (
 	MONGODB_USER_DB = "MONGODB_USER_DB"
 )
 
-func NewMongoDBConnection() (*mongo.Database, error) {
+func NewMongoDBConnection(
+	ctx context.Context,
+) (*mongo.Database, error) {
 	mongodb_uri := os.Getenv(MONGODB_URL)
 	mongodb_database := os.Getenv(MONGODB_USER_DB)
-
-	ctx := context.Background()
 
 	client, err := mongo.Connect(
 		ctx,

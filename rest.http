@@ -2,7 +2,7 @@
 
 
 ###
-GET {{url}}/users/2334
+GET {{url}}/users/6571d83d43119182a6098b94
 
 ###
 GET {{url}}/users/email/2334
@@ -18,7 +18,14 @@ POST {{url}}/users
 }
 
 ###
-PUT {{url}}/users/2334
+PUT {{url}}/users/6571d83d43119182a6098b94
+
+{
+    "email" : "test@test2.com",
+	"password": "123456!2",
+	"name": "Teste name2",
+	"age": 34
+}
 
 ###
 DELETE {{url}}/users/2334
