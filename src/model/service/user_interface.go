@@ -17,21 +17,26 @@ type userDomainService struct {
 }
 
 type UserDomainService interface {
-	Create(
+	CreateService(
 		model.UserDomainInterface,
 	) (model.UserDomainInterface, *rest_err.RestErr)
 
-	Update(
+	UpdateService(
 		string, model.UserDomainInterface,
 	) *rest_err.RestErr
 
-	FindByID(
+	FindByIDService(
 		id string,
 	) (model.UserDomainInterface, *rest_err.RestErr)
 
-	FindByEmail(
+	FindByEmailService(
 		email string,
 	) (model.UserDomainInterface, *rest_err.RestErr)
 
-	Delete(string) *rest_err.RestErr
+	findByEmailAndPasswordService(
+		email string,
+		password string,
+	) (model.UserDomainInterface, *rest_err.RestErr)
+
+	DeleteService(string) *rest_err.RestErr
 }

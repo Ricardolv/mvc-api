@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (ud *userDomainService) Update(
+func (ud *userDomainService) UpdateService(
 	userId string,
 	userDomain model.UserDomainInterface,
 ) *rest_err.RestErr {
