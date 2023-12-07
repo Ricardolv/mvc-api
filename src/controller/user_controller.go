@@ -20,6 +20,7 @@ type UserControllerInterface interface {
 	Delete(c *gin.Context)
 	Create(c *gin.Context)
 	Update(c *gin.Context)
+	LoginUser(c *gin.Context)
 }
 
 type userControllerInterface struct {

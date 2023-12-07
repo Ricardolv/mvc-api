@@ -19,3 +19,4 @@
 - [Mongo](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.13.1/mongo/options)         <BR/>
 - [Mongo drive](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.13.1/mongo/options)   <BR/>
 - [uuid](https://github.com/google/uuid)                                                <BR/>
+- [jwt-go](https://pkg.go.dev/github.com/dgrijalva/jwt-go)                              <BR/>
