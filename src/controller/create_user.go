@@ -7,7 +7,7 @@ import (
 	"github.com/Ricardolv/mvc-api/src/config/validation"
 	"github.com/Ricardolv/mvc-api/src/controller/request"
 	"github.com/Ricardolv/mvc-api/src/model"
-	"github.com/Ricardolv/mvc-api/src/model/service"
+	"github.com/Ricardolv/mvc-api/src/view"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -16,7 +16,7 @@ var (
 	UserDomanInterface model.UserDomainInterface
 )
 
-func Create(c *gin.Context) {
+func (uc *userControllerInterface) Create(c *gin.Context) {
 
 	logger.Info("Init CreateUser controller", zap.String("journey", "createUser"))
 
@@ -36,9 +36,7 @@ func Create(c *gin.Context) {
 		userRequest.Age,
 	)
 
-	service := service.NewUserDomainService()
-
-	_, err := service.Create(domain)
+	_, err := uc.service.Create(domain)
 	if err != nil {
 		logger.Error(
 			"Error trying to call CreateUser service",
@@ -53,5 +51,5 @@ func Create(c *gin.Context) {
 		zap.String("userId", ""),
 		zap.String("journey", "createUser"))
 
-	c.String(http.StatusOK, "")
+	c.JSON(http.StatusOK, view.ConverterDomainToResponse(domain))
 }
