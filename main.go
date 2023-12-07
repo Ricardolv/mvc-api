@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/Ricardolv/mvc-api/src/config/database/mongodb"
 	"github.com/Ricardolv/mvc-api/src/config/logger"
 	"github.com/Ricardolv/mvc-api/src/controller"
 	"github.com/Ricardolv/mvc-api/src/controller/routes"
@@ -21,6 +22,8 @@ func main() {
 			err.Error())
 		return
 	}
+
+	mongodb.NewMongoDBConnection()
 
 	service := service.NewUserDomainService()
 	controller := controller.NewUserControllerInterface(service)
