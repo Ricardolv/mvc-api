@@ -7,6 +7,7 @@ import (
 	"github.com/Ricardolv/mvc-api/src/config/validation"
 	"github.com/Ricardolv/mvc-api/src/controller/request"
 	"github.com/Ricardolv/mvc-api/src/model"
+	"github.com/Ricardolv/mvc-api/src/model/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -35,8 +36,16 @@ func Create(c *gin.Context) {
 		userRequest.Age,
 	)
 
-	if err := domain.Create(); err != nil {
+	service := service.NewUserDomainService()
+
+	_, err := service.Create(domain)
+	if err != nil {
+		logger.Error(
+			"Error trying to call CreateUser service",
+			err,
+			zap.String("journey", "createUser"))
 		c.JSON(err.Code, err)
+		return
 	}
 
 	logger.Info(
