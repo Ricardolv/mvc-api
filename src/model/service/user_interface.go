@@ -40,7 +40,7 @@ type UserDomainService interface {
 
 	DeleteService(string) *rest_err.RestErr
 
-	LoginUserServices(
+	LoginUserService(
 		userDomain model.UserDomainInterface,
 	) (model.UserDomainInterface, string, *rest_err.RestErr)
 }

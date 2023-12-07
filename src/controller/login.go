@@ -31,7 +31,7 @@ func (uc *userControllerInterface) LoginUser(c *gin.Context) {
 		loginRequest.Email,
 		loginRequest.Password,
 	)
-	domainResult, token, err := uc.service.LoginUserServices(domain)
+	domainResult, token, err := uc.service.LoginUserService(domain)
 	if err != nil {
 		logger.Error(
 			"Error trying to call loginUser service",

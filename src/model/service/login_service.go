@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (ud *userDomainService) LoginUserServices(
+func (ud *userDomainService) LoginUserService(
 	userDomain model.UserDomainInterface,
 ) (model.UserDomainInterface, string, *rest_err.RestErr) {
 

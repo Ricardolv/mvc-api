@@ -20,3 +20,4 @@
 - [uuid](https://github.com/google/uuid)                                                <BR/>
 - [jwt-go](https://pkg.go.dev/github.com/dgrijalva/jwt-go)                              <BR/>
 - [Testify - Thou Shalt Write Tests](https://github.com/stretchr/testify)               <BR/>
+- [gomock](https://pkg.go.dev/go.uber.org/mock/gomock)                                  <BR/>
