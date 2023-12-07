@@ -13,7 +13,7 @@
 - [Oidc - OpenID Connect support for Go](https://github.com/coreos/go-oidc)     <BR/>
 - [jwt-go](https://github.com/dgrijalva/jwt-go)                                 <BR/> -->
 - [GoDotEnv](https://github.com/joho/godotenv)                                          <BR/>
-- (Gin Web Framework)[https://gin-gonic.com/]                                           <BR/>
+- [Gin Web Framework](https://gin-gonic.com/)                                           <BR/>
 - [Package validator](https://github.com/go-playground/validator)                       <BR/>
 - [zap logger](https://github.com/uber-go/zap)                                          <BR/>
 - [Mongo](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.13.1/mongo/options)         <BR/>
