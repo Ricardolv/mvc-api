@@ -11,19 +11,19 @@ GET {{url}}/users/email/2334
 POST {{url}}/users
 
 {
-    "email" : "test@test.com",
+    "email" : "test@test1.com",
 	"password": "123456!",
 	"name": "Teste name",
 	"age": 34
 }
 
 ###
-PUT {{url}}/users/6571d83d43119182a6098b94
+PUT {{url}}/users/6572233a26e597761436d5d9
 
 {
-    "email" : "test@test2.com",
-	"password": "123456!2",
-	"name": "Teste name2",
+    "email" : "test@test3.com",
+	"password": "123456!3",
+	"name": "Teste name3",
 	"age": 34
 }
 

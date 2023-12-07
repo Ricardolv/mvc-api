@@ -18,4 +18,4 @@
 - [zap logger](https://github.com/uber-go/zap)                                          <BR/>
 - [Mongo](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.13.1/mongo/options)         <BR/>
 - [Mongo drive](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.13.1/mongo/options)   <BR/>
-- [uuid](https://github.com/google/uuid)
+- [uuid](https://github.com/google/uuid)                                                <BR/>
