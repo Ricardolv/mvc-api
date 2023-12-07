@@ -1,14 +1,22 @@
 @url = http://localhost:8080
 
-
 ###
 GET {{url}}/users/6571d83d43119182a6098b94
+Accept: application/json
+Authorization:
+
+// Buscar usuário no banco de dados por email
+GET http://localhost:8080/users/email/647b3fc9c5be50a5f2e48008
+Accept: application/json
+Authorization:
 
 ###
 GET {{url}}/users/email/2334
+Accept: application/json
 
 ###
 POST {{url}}/users
+Content-Type: application/json
 
 {
     "email" : "test@test11.com",
@@ -19,6 +27,7 @@ POST {{url}}/users
 
 ###
 PUT {{url}}/users/657225332c3e435fc3f413f1
+Accept: application/json
 
 {
 	"name": "Teste name8",
@@ -27,11 +36,12 @@ PUT {{url}}/users/657225332c3e435fc3f413f1
 
 ###
 DELETE {{url}}/users/6571d8ab43119182a6098b95
+Accept: application/json
 
 
 ###
 POST {{url}}/login
-
+Content-Type: application/json
 {
     "email" : "test@test11.com",
 	"password": "123456!11"
