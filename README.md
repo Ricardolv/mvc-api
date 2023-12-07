@@ -15,3 +15,4 @@
 - [GoDotEnv](https://github.com/joho/godotenv)                                 <BR/>
 - (Gin Web Framework)[https://gin-gonic.com/]                                  <BR/>
 - [Package validator](https://github.com/go-playground/validator)              <BR/>
+- [zap logger](https://github.com/uber-go/zap)                                 <BR/>
