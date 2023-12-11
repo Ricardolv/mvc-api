@@ -1,5 +1,8 @@
 package request
 
+// LoginRequest represents the data required for user login.
+// @Summary User Login Data
+// @Description Structure containing the necessary fields for user login.
 type LoginRequest struct {
 	// User's email (required and must be a valid email address).
 	Email string `json:"email" binding:"required,email" example:"tests@tests.com"`

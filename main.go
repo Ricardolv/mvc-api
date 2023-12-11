@@ -12,8 +12,17 @@ import (
 	"github.com/Ricardolv/mvc-api/src/model/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	_ "github.com/Ricardolv/mvc-api/docs"
 )
 
+// @title MVC Api em Go | Richard
+// @version 1.0
+// @description API for crud operations on users
+// @host localhost:8080
+// @BasePath /users
+// @schemes http
+// @license MIT
 func main() {
 	logger.Info("About to start user application")
 
