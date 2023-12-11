@@ -27,7 +27,7 @@ func main() {
 	logger.Info("About to start user application")
 
 	godotenv.Load()
-	
+
 	database, err := mongodb.NewMongoDBConnection(context.Background())
 	if err != nil {
 		log.Fatalf(
