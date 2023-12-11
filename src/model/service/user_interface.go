@@ -33,11 +33,6 @@ type UserDomainService interface {
 		email string,
 	) (model.UserDomainInterface, *rest_err.RestErr)
 
-	findByEmailAndPasswordService(
-		email string,
-		password string,
-	) (model.UserDomainInterface, *rest_err.RestErr)
-
 	DeleteService(string) *rest_err.RestErr
 
 	LoginUserService(

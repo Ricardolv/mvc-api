@@ -4,10 +4,10 @@ import (
 	"testing"
 
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
-	"github.com/Ricardolv/mvc-api/src/test/mocks"
+	"github.com/Ricardolv/mvc-api/src/tests/mocks"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.uber.org/mock/gomock"
 )
 
 func TestUserDomainService_DeleteUser(t *testing.T) {

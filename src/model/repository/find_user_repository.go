@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 
@@ -22,8 +23,8 @@ func (ur *userRepository) FindByEmail(
 	logger.Info("Init findUserByEmail repository",
 		zap.String("journey", "findUserByEmail"))
 
-	collection_name := os.Getenv(MONGODB_USER_DB)
-	collection := ur.databaseConnection.Collection(collection_name)
+	collectionName := os.Getenv(MONGODB_USER_DB)
+	collection := ur.databaseConnection.Collection(collectionName)
 
 	userEntity := &entity.UserEntity{}
 
@@ -34,7 +35,7 @@ func (ur *userRepository) FindByEmail(
 	).Decode(userEntity)
 
 	if err != nil {
-		if err == mongo.ErrNoDocuments {
+		if errors.Is(err, mongo.ErrNoDocuments) {
 			errorMessage := fmt.Sprintf(
 				"User not found with this email: %s", email)
 			logger.Error(errorMessage,
@@ -64,8 +65,8 @@ func (ur *userRepository) FindByID(
 	logger.Info("Init findUserByID repository",
 		zap.String("journey", "findUserByID"))
 
-	collection_name := os.Getenv(MONGODB_USER_DB)
-	collection := ur.databaseConnection.Collection(collection_name)
+	collectionName := os.Getenv(MONGODB_USER_DB)
+	collection := ur.databaseConnection.Collection(collectionName)
 
 	userEntity := &entity.UserEntity{}
 
@@ -77,7 +78,7 @@ func (ur *userRepository) FindByID(
 	).Decode(userEntity)
 
 	if err != nil {
-		if err == mongo.ErrNoDocuments {
+		if errors.Is(err, mongo.ErrNoDocuments) {
 			errorMessage := fmt.Sprintf(
 				"User not found with this ID: %s", id)
 			logger.Error(errorMessage,
@@ -107,8 +108,8 @@ func (ur *userRepository) FindByEmailAndPassword(
 	logger.Info("Init findUserByEmailAndPassword repository",
 		zap.String("journey", "findUserByEmailAndPassword"))
 
-	collection_name := os.Getenv(MONGODB_USER_DB)
-	collection := ur.databaseConnection.Collection(collection_name)
+	collectionName := os.Getenv(MONGODB_USER_DB)
+	collection := ur.databaseConnection.Collection(collectionName)
 
 	userEntity := &entity.UserEntity{}
 
@@ -122,7 +123,7 @@ func (ur *userRepository) FindByEmailAndPassword(
 	).Decode(userEntity)
 
 	if err != nil {
-		if err == mongo.ErrNoDocuments {
+		if errors.Is(err, mongo.ErrNoDocuments) {
 			errorMessage := "User or password is invalid"
 			logger.Error(errorMessage,
 				err,

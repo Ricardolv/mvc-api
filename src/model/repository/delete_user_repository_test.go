@@ -32,7 +32,7 @@ func TestUserRepository_DeleteUser(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		err := repo.Delete("test")
+		err := repo.Delete("tests")
 
 		assert.Nil(t, err)
 	})
@@ -44,7 +44,7 @@ func TestUserRepository_DeleteUser(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		err := repo.Delete("test")
+		err := repo.Delete("tests")
 
 		assert.NotNil(t, err)
 	})

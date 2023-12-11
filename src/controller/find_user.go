@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"net/mail"
 
 	"github.com/Ricardolv/mvc-api/src/config/logger"
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
@@ -49,4 +50,40 @@ func (uc *userControllerInterface) FindByID(c *gin.Context) {
 	))
 }
 
-func (uc *userControllerInterface) FindByEmail(c *gin.Context) {}
+func (uc *userControllerInterface) FindByEmail(c *gin.Context) {
+	logger.Info("Init findUserByEmail controller",
+		zap.String("journey", "findUserByEmail"),
+	)
+
+	userEmail := c.Param("userEmail")
+
+	if _, err := mail.ParseAddress(userEmail); err != nil {
+		logger.Error("Error trying to validate userEmail",
+			err,
+			zap.String("journey", "findUserByEmail"),
+		)
+		errorMessage := rest_err.NewBadRequestError(
+			"UserEmail is not a valid email",
+		)
+
+		c.JSON(errorMessage.Code, errorMessage)
+		return
+	}
+
+	userDomain, err := uc.service.FindByEmailService(userEmail)
+	if err != nil {
+		logger.Error("Error trying to call findUserByEmail services",
+			err,
+			zap.String("journey", "findUserByEmail"),
+		)
+		c.JSON(err.Code, err)
+		return
+	}
+
+	logger.Info("findUserByEmail controller executed successfully",
+		zap.String("journey", "findUserByEmail"),
+	)
+	c.JSON(http.StatusOK, view.ConvertDomainToResponse(
+		userDomain,
+	))
+}

@@ -19,7 +19,7 @@ POST {{url}}/users
 Content-Type: application/json
 
 {
-    "email" : "test@test11.com",
+    "email" : "tests@test11.com",
 	"password": "123456!11",
 	"name": "Teste name11",
 	"age": 34

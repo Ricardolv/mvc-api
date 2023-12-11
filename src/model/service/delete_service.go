@@ -9,8 +9,7 @@ import (
 func (ud *userDomainService) DeleteService(
 	userId string) *rest_err.RestErr {
 
-	logger.Info("Init deleteUser model.",
-		zap.String("journey", "deleteUser"))
+	logger.Info("Init deleteUser model.", zap.String("journey", "deleteUser"))
 
 	err := ud.userRepository.Delete(userId)
 	if err != nil {
@@ -20,8 +19,7 @@ func (ud *userDomainService) DeleteService(
 		return err
 	}
 
-	logger.Info(
-		"deleteUser service executed successfully",
+	logger.Info("deleteUser service executed successfully",
 		zap.String("userId", userId),
 		zap.String("journey", "deleteUser"))
 	return nil

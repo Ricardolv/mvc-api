@@ -5,10 +5,10 @@ import (
 
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
 	"github.com/Ricardolv/mvc-api/src/model"
-	"github.com/Ricardolv/mvc-api/src/test/mocks"
+	"github.com/Ricardolv/mvc-api/src/tests/mocks"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.uber.org/mock/gomock"
 )
 
 func TestUserDomainService_UpdateUser(t *testing.T) {
@@ -21,7 +21,7 @@ func TestUserDomainService_UpdateUser(t *testing.T) {
 	t.Run("when_sending_a_valid_user_and_userId_returns_success", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
 		repository.EXPECT().Update(id, userDomain).Return(nil)
@@ -34,7 +34,7 @@ func TestUserDomainService_UpdateUser(t *testing.T) {
 	t.Run("when_sending_a_invalid_user_and_userId_returns_error", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
 		repository.EXPECT().Update(id, userDomain).Return(

@@ -7,10 +7,10 @@ import (
 
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
 	"github.com/Ricardolv/mvc-api/src/model"
-	"github.com/Ricardolv/mvc-api/src/test/mocks"
+	"github.com/Ricardolv/mvc-api/src/tests/mocks"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.uber.org/mock/gomock"
 )
 
 func TestUserDomainService_FindUserByIDServices(t *testing.T) {
@@ -23,9 +23,8 @@ func TestUserDomainService_FindUserByIDServices(t *testing.T) {
 	t.Run("when_exists_an_user_returns_success", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
-
 		repository.EXPECT().FindByID(id).Return(userDomain, nil)
 
 		userDomainReturn, err := service.FindByIDService(id)
@@ -42,6 +41,7 @@ func TestUserDomainService_FindUserByIDServices(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
 		repository.EXPECT().FindByID(id).Return(nil, rest_err.NewNotFoundError("user not found"))
+
 		userDomainReturn, err := service.FindByIDService(id)
 
 		assert.Nil(t, userDomainReturn)
@@ -59,9 +59,9 @@ func TestUserDomainService_FindUserByEmailServices(t *testing.T) {
 
 	t.Run("when_exists_an_user_returns_success", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
-		email := "test@success.com"
+		email := "tests@success.com"
 
-		userDomain := model.NewUserDomain(email, "test", "test", 50)
+		userDomain := model.NewUserDomain(email, "tests", "tests", 50)
 		userDomain.SetID(id)
 
 		repository.EXPECT().FindByEmail(email).Return(userDomain, nil)
@@ -77,7 +77,7 @@ func TestUserDomainService_FindUserByEmailServices(t *testing.T) {
 	})
 
 	t.Run("when_does_not_exists_an_user_returns_error", func(t *testing.T) {
-		email := "test@error.com"
+		email := "tests@error.com"
 
 		repository.EXPECT().FindByEmail(email).Return(nil, rest_err.NewNotFoundError("user not found"))
 		userDomainReturn, err := service.FindByEmailService(email)
@@ -97,10 +97,10 @@ func TestUserDomainService_FindUserByEmailAndPasswordServices(t *testing.T) {
 
 	t.Run("when_exists_an_user_returns_success", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
-		email := "test@success.com"
+		email := "tests@success.com"
 		password := strconv.FormatInt(rand.Int63(), 10)
 
-		userDomain := model.NewUserDomain(email, password, "test", 50)
+		userDomain := model.NewUserDomain(email, password, "tests", 50)
 		userDomain.SetID(id)
 
 		repository.EXPECT().FindByEmailAndPassword(email, password).Return(userDomain, nil)
@@ -116,7 +116,7 @@ func TestUserDomainService_FindUserByEmailAndPasswordServices(t *testing.T) {
 	})
 
 	t.Run("when_does_not_exists_an_user_returns_error", func(t *testing.T) {
-		email := "test@error.com"
+		email := "tests@error.com"
 		password := strconv.FormatInt(rand.Int63(), 10)
 
 		repository.EXPECT().FindByEmailAndPassword(email, password).Return(nil, rest_err.NewNotFoundError("user not found"))

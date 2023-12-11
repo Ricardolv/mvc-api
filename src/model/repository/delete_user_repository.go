@@ -17,8 +17,8 @@ func (ur *userRepository) Delete(
 	logger.Info("Init deleteUser repository",
 		zap.String("journey", "deleteUser"))
 
-	collection_name := os.Getenv(MONGODB_USER_DB)
-	collection := ur.databaseConnection.Collection(collection_name)
+	collectionName := os.Getenv(MONGODB_USER_DB)
+	collection := ur.databaseConnection.Collection(collectionName)
 
 	userIdHex, _ := primitive.ObjectIDFromHex(userId)
 

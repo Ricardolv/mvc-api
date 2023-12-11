@@ -23,7 +23,7 @@ func TestUserRepository_UpdateUser(t *testing.T) {
 	defer os.Clearenv()
 
 	mtestDb := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
-	// defer mtestDb.Close()
+	defer mtestDb.ClearEvents()
 
 	mtestDb.Run("when_sending_a_valid_user_return_success", func(mt *mtest.T) {
 		mt.AddMockResponses(bson.D{
@@ -35,7 +35,7 @@ func TestUserRepository_UpdateUser(t *testing.T) {
 
 		repo := NewUserRepository(databaseMock)
 		domain := model.NewUserDomain(
-			"test@test.com", "test", "test", 90)
+			"tests@tests.com", "tests", "tests", 90)
 		domain.SetID(primitive.NewObjectID().Hex())
 
 		err := repo.Update(domain.GetID(), domain)
@@ -51,7 +51,7 @@ func TestUserRepository_UpdateUser(t *testing.T) {
 
 		repo := NewUserRepository(databaseMock)
 		domain := model.NewUserDomain(
-			"test@test.com", "test", "test", 90)
+			"tests@tests.com", "tests", "tests", 90)
 		domain.SetID(primitive.NewObjectID().Hex())
 		err := repo.Update(domain.GetID(), domain)
 

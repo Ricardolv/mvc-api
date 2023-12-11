@@ -21,9 +21,9 @@ func TestUserRepository_CreateUser(t *testing.T) {
 		return
 	}
 	defer os.Clearenv()
-	// defer mtestDb.Close()
 
 	mtestDb := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
+	defer mtestDb.ClearEvents()
 
 	mtestDb.Run("when_sending_a_valid_domain_returns_success", func(mt *mtest.T) {
 		mt.AddMockResponses(bson.D{
@@ -35,7 +35,7 @@ func TestUserRepository_CreateUser(t *testing.T) {
 
 		repo := NewUserRepository(databaseMock)
 		domain := model.NewUserDomain(
-			"test@test.com", "test", "test", 90)
+			"tests@tests.com", "tests", "tests", 90)
 		userDomain, err := repo.Create(domain)
 
 		_, errId := primitive.ObjectIDFromHex(userDomain.GetID())
@@ -56,7 +56,7 @@ func TestUserRepository_CreateUser(t *testing.T) {
 
 		repo := NewUserRepository(databaseMock)
 		domain := model.NewUserDomain(
-			"test@test.com", "test", "test", 90)
+			"tests@tests.com", "tests", "tests", 90)
 		userDomain, err := repo.Create(domain)
 
 		assert.NotNil(t, err)

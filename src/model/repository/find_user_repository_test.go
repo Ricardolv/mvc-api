@@ -24,14 +24,14 @@ func TestUserRepository_FindUserByEmail(t *testing.T) {
 	defer os.Clearenv()
 
 	mtestDb := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
-	// defer mtestDb.Close()
+	defer mtestDb.ClearEvents()
 
 	mtestDb.Run("when_sending_a_valid_email_returns_success", func(mt *mtest.T) {
 		userEntity := entity.UserEntity{
 			ID:       primitive.NewObjectID(),
-			Email:    "test@test.com",
-			Password: "test",
-			Name:     "test",
+			Email:    "tests@tests.com",
+			Password: "tests",
+			Name:     "tests",
 			Age:      50,
 		}
 		mt.AddMockResponses(mtest.CreateCursorResponse(
@@ -47,10 +47,10 @@ func TestUserRepository_FindUserByEmail(t *testing.T) {
 
 		assert.Nil(t, err)
 		assert.EqualValues(t, userDomain.GetID(), userEntity.ID.Hex())
-		assert.EqualValues(t, userDomain.GetEmail(), userDomain.GetEmail())
-		assert.EqualValues(t, userDomain.GetName(), userDomain.GetName())
-		assert.EqualValues(t, userDomain.GetAge(), userDomain.GetAge())
-		assert.EqualValues(t, userDomain.GetPassword(), userDomain.GetPassword())
+		assert.EqualValues(t, userDomain.GetEmail(), userEntity.Email)
+		assert.EqualValues(t, userDomain.GetName(), userEntity.Name)
+		assert.EqualValues(t, userDomain.GetAge(), userEntity.Age)
+		assert.EqualValues(t, userDomain.GetPassword(), userEntity.Password)
 	})
 
 	mtestDb.Run("returns_error_when_mongodb_returns_error", func(mt *mtest.T) {
@@ -61,7 +61,7 @@ func TestUserRepository_FindUserByEmail(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		userDomain, err := repo.FindByEmail("test")
+		userDomain, err := repo.FindByEmail("tests")
 
 		assert.NotNil(t, err)
 		assert.Nil(t, userDomain)
@@ -76,9 +76,10 @@ func TestUserRepository_FindUserByEmail(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		userDomain, err := repo.FindByEmail("test")
+		userDomain, err := repo.FindByEmail("tests")
 
 		assert.NotNil(t, err)
+		assert.Equal(t, err.Message, fmt.Sprintf("User not found with this email: tests"))
 		assert.Nil(t, userDomain)
 	})
 }
@@ -95,14 +96,14 @@ func TestUserRepository_FindUserByEmailAndPassword(t *testing.T) {
 	defer os.Clearenv()
 
 	mtestDb := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
-	// defer mtestDb.Close()
+	defer mtestDb.ClearEvents()
 
 	mtestDb.Run("when_sending_a_valid_email_and_password_returns_success", func(mt *mtest.T) {
 		userEntity := entity.UserEntity{
 			ID:       primitive.NewObjectID(),
-			Email:    "test@test.com",
-			Password: "test",
-			Name:     "test",
+			Email:    "tests@tests.com",
+			Password: "tests",
+			Name:     "tests",
 			Age:      50,
 		}
 		mt.AddMockResponses(mtest.CreateCursorResponse(
@@ -132,7 +133,7 @@ func TestUserRepository_FindUserByEmailAndPassword(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		userDomain, err := repo.FindByEmailAndPassword("test", "testpass")
+		userDomain, err := repo.FindByEmailAndPassword("tests", "testpass")
 		assert.NotNil(t, err)
 		assert.Nil(t, userDomain)
 	})
@@ -146,7 +147,7 @@ func TestUserRepository_FindUserByEmailAndPassword(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		userDomain, err := repo.FindByEmailAndPassword("test", "testpass")
+		userDomain, err := repo.FindByEmailAndPassword("tests", "testpass")
 
 		assert.NotNil(t, err)
 		assert.Nil(t, userDomain)
@@ -165,14 +166,14 @@ func TestUserRepository_FindUserById(t *testing.T) {
 	defer os.Clearenv()
 
 	mtestDb := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
-	// defer mtestDb.Close()
+	defer mtestDb.ClearEvents()
 
 	mtestDb.Run("when_sending_a_valid_id_returns_success", func(mt *mtest.T) {
 		userEntity := entity.UserEntity{
 			ID:       primitive.NewObjectID(),
-			Email:    "test@test.com",
-			Password: "test",
-			Name:     "test",
+			Email:    "tests@tests.com",
+			Password: "tests",
+			Name:     "tests",
 			Age:      50,
 		}
 		mt.AddMockResponses(mtest.CreateCursorResponse(
@@ -202,9 +203,10 @@ func TestUserRepository_FindUserById(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		userDomain, err := repo.FindByID("test")
+		userDomain, err := repo.FindByID("tests")
 
 		assert.NotNil(t, err)
+		assert.Equal(t, err.Message, fmt.Sprintf("Error trying to find user by ID"))
 		assert.Nil(t, userDomain)
 	})
 
@@ -217,10 +219,10 @@ func TestUserRepository_FindUserById(t *testing.T) {
 		databaseMock := mt.Client.Database(databaseName)
 
 		repo := NewUserRepository(databaseMock)
-		userDomain, err := repo.FindByID("test")
+		userDomain, err := repo.FindByID("tests")
 
 		assert.NotNil(t, err)
-		assert.Equal(t, err.Message, fmt.Sprintf("User not found with this ID: test"))
+		assert.Equal(t, err.Message, fmt.Sprintf("User not found with this ID: tests"))
 		assert.Nil(t, userDomain)
 	})
 }

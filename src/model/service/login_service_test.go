@@ -6,11 +6,11 @@ import (
 
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
 	"github.com/Ricardolv/mvc-api/src/model"
-	"github.com/Ricardolv/mvc-api/src/test/mocks"
+	"github.com/Ricardolv/mvc-api/src/tests/mocks"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.uber.org/mock/gomock"
 )
 
 func TestUserDomainService_LoginUserServices(t *testing.T) {
@@ -23,7 +23,7 @@ func TestUserDomainService_LoginUserServices(t *testing.T) {
 	t.Run("when_calling_repository_returns_error", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
 		userDomainMock := model.NewUserDomain(
@@ -34,10 +34,14 @@ func TestUserDomainService_LoginUserServices(t *testing.T) {
 		userDomainMock.EncryptPassword()
 
 		repository.EXPECT().FindByEmailAndPassword(
-			userDomain.GetEmail(), userDomainMock.GetPassword()).Return(
-			nil, rest_err.NewInternalServerError("error trying to find user by email and password"))
+			userDomain.GetEmail(),
+			userDomainMock.GetPassword(),
+		).Return(
+			nil,
+			rest_err.NewInternalServerError("error trying to find user by email and password"))
 
 		user, token, err := service.LoginUserService(userDomain)
+
 		assert.Nil(t, user)
 		assert.Empty(t, token)
 		assert.NotNil(t, err)
@@ -47,16 +51,15 @@ func TestUserDomainService_LoginUserServices(t *testing.T) {
 	t.Run("when_calling_create_token_returns_error", func(t *testing.T) {
 		userDomainMock := mocks.NewMockUserDomainInterface(ctrl)
 
-		userDomainMock.EXPECT().GetEmail().Return("test@test.com")
-		userDomainMock.EXPECT().GetPassword().Return("test")
+		userDomainMock.EXPECT().GetEmail().Return("tests@tests.com")
+		userDomainMock.EXPECT().GetPassword().Return("tests")
 		userDomainMock.EXPECT().EncryptPassword()
 
 		userDomainMock.EXPECT().GenerateToken().Return("",
 			rest_err.NewInternalServerError("error trying to create token"))
 
-		repository.EXPECT().FindByEmailAndPassword(
-			"test@test.com", "test").Return(
-			userDomainMock, nil)
+		repository.EXPECT().FindByEmailAndPassword("tests@tests.com",
+			"tests").Return(userDomainMock, nil)
 
 		user, token, err := service.LoginUserService(userDomainMock)
 		assert.Nil(t, user)
@@ -67,7 +70,7 @@ func TestUserDomainService_LoginUserServices(t *testing.T) {
 
 	t.Run("when_user_and_password_is_valid_return_success", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
-		secret := "test"
+		secret := "tests"
 
 		err := os.Setenv("JWT_SECRET_KEY", secret)
 		if err != nil {
@@ -76,12 +79,11 @@ func TestUserDomainService_LoginUserServices(t *testing.T) {
 		}
 		defer os.Clearenv()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
 		repository.EXPECT().FindByEmailAndPassword(
-			userDomain.GetEmail(), gomock.Any()).Return(
-			userDomain, nil)
+			userDomain.GetEmail(), gomock.Any()).Return(userDomain, nil)
 
 		userDomainReturn, token, err := service.LoginUserService(userDomain)
 		assert.Nil(t, err)

@@ -20,8 +20,8 @@ func (ur *userRepository) Update(
 	logger.Info("Init updateUser repository",
 		zap.String("journey", "updateUser"))
 
-	collection_name := os.Getenv(MONGODB_USER_DB)
-	collection := ur.databaseConnection.Collection(collection_name)
+	collectionName := os.Getenv(MONGODB_USER_DB)
+	collection := ur.databaseConnection.Collection(collectionName)
 
 	value := converter.ConvertDomainToEntity(userDomain)
 	userIdHex, _ := primitive.ObjectIDFromHex(userId)

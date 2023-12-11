@@ -5,10 +5,10 @@ import (
 
 	"github.com/Ricardolv/mvc-api/src/config/rest_err"
 	"github.com/Ricardolv/mvc-api/src/model"
-	"github.com/Ricardolv/mvc-api/src/test/mocks"
+	"github.com/Ricardolv/mvc-api/src/tests/mocks"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.uber.org/mock/gomock"
 )
 
 func TestUserDomainService_CreateUserServices(t *testing.T) {
@@ -21,7 +21,7 @@ func TestUserDomainService_CreateUserServices(t *testing.T) {
 	t.Run("when_user_already_exists_returns_error", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
 		repository.EXPECT().FindByEmail(userDomain.GetEmail()).Return(userDomain, nil)
@@ -36,14 +36,13 @@ func TestUserDomainService_CreateUserServices(t *testing.T) {
 	t.Run("when_user_is_not_registered_returns_error", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
-		repository.EXPECT().FindByEmail(userDomain.GetEmail()).Return(
-			nil, nil)
+		repository.EXPECT().FindByEmail(userDomain.GetEmail()).Return(nil, nil)
 
-		repository.EXPECT().Create(userDomain).Return(
-			nil, rest_err.NewInternalServerError("error trying to create user"))
+		repository.EXPECT().Create(userDomain).Return(nil,
+			rest_err.NewInternalServerError("error trying to create user"))
 
 		user, err := service.CreateService(userDomain)
 
@@ -55,14 +54,12 @@ func TestUserDomainService_CreateUserServices(t *testing.T) {
 	t.Run("when_user_is_not_registered_returns_success", func(t *testing.T) {
 		id := primitive.NewObjectID().Hex()
 
-		userDomain := model.NewUserDomain("test@test.com", "test", "test", 50)
+		userDomain := model.NewUserDomain("tests@tests.com", "tests", "tests", 50)
 		userDomain.SetID(id)
 
-		repository.EXPECT().FindByEmail(userDomain.GetEmail()).Return(
-			nil, nil)
+		repository.EXPECT().FindByEmail(userDomain.GetEmail()).Return(nil, nil)
 
-		repository.EXPECT().Create(userDomain).Return(
-			userDomain, nil)
+		repository.EXPECT().Create(userDomain).Return(userDomain, nil)
 
 		user, err := service.CreateService(userDomain)
 
