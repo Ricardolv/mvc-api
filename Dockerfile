@@ -1,4 +1,4 @@
-FROM golang:1.19 AS BUILDER
+FROM golang:1.21.4 AS BUILDER
 
 
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY main.go main.go
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on \
  GOOS=linux go build -o mvc-api .
 
-FROM golang:1.19-alpine3.15 as runner
+FROM golang:1.21.5-alpine3.19 as runner
 
 RUN adduser -D richard
 
@@ -24,4 +24,5 @@ EXPOSE 8080
 
 USER richard
 
+WORKDIR /app
 CMD ["./mvc-api"]

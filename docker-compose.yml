@@ -1,9 +1,9 @@
 version: '3'
 services:
 
-  mvc-mongodb:
+  mongodb:
     image: mongo
-    container_name: mvc-mongodb
+    container_name: mongodb
     ports:
       - "27017:27017"
     networks:
@@ -20,7 +20,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mvc-mongodb
+      - mongodb
     networks:
       - mvc_api_network
 
