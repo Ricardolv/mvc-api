@@ -21,3 +21,4 @@
 - [jwt-go](https://pkg.go.dev/github.com/dgrijalva/jwt-go)                              <BR/>
 - [Testify - Thou Shalt Write Tests](https://github.com/stretchr/testify)               <BR/>
 - [gomock](https://pkg.go.dev/go.uber.org/mock/gomock)                                  <BR/>
+  - [Use Docker to run your Golang integration tests against third party services on Microsoft Windows, Mac OSX and Linux!](github.com/ory/dockertest)                       <BR/>
