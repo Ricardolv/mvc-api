@@ -1,25 +1,26 @@
 version: '3'
 services:
-  # mvc-api:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - MONGODB_URL=mongodb://mongodb:27017
-  #     - MONGODB_USER_DB=users
-  #     - JWT_SECRET_KEY=<um_valor_randomico>
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - mvc-mongodb
-  #   networks:
-  #     - mvc_api_network
 
   mvc-mongodb:
     image: mongo
     container_name: mvc-mongodb
     ports:
       - "27017:27017"
+    networks:
+      - mvc_api_network
+
+  mvc-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - MONGODB_USER_DB=users
+      - JWT_SECRET_KEY=banana
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mvc-mongodb
     networks:
       - mvc_api_network
 
